@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.concurrent.Task;
+import javax.swing.Timer;
 
 /**
  *
@@ -20,6 +21,7 @@ public class Game {
     LinkedList<Move> validMoves = new LinkedList<>();
     LinkedList<Move> adviceMoves = new LinkedList<>();
     final int patience = 2;
+    int difficultyLevel = 3;
     int toAdvice = patience;
 
     public Game(CheckersGUI w) {
@@ -50,7 +52,7 @@ public class Game {
                     return false;
             }
         }
-        window.repaint();
+        //window.repaint();
         return false;
     }
 
@@ -70,16 +72,32 @@ public class Game {
             if (Distance(x, y, xp, yp) < CheckersGUI.BoardPanel.pieceDiameter / 2) {
                 gs.ApplyMove(m);
                 validMoves = new LinkedList<>();
-                window.repaint();
+                //window.repaint();
                 return true;
             }
         }
-        window.repaint();
+        //window.repaint();
         return false;
+    }
+    
+    public void AI_Move()
+    {
+        if(turn != player)
+        {
+            Move m = Simulator.GetOptimalMove(difficultyLevel, turn, gs);
+            if(m == null)
+            {
+                
+            }
+            gs.ApplyMove(m);
+            turn = turn.Negate();
+            window.repaint();
+        }
     }
     
     public void UserInteraction(java.awt.event.MouseEvent evt)
     {
+        //window.repaint();
         int x = evt.getX();
         int y = evt.getY();
         if(turn == player)
@@ -88,6 +106,9 @@ public class Game {
             {
                 toAdvice = patience;
                 adviceMoves = new LinkedList<>();
+                
+                turn = turn.Negate();
+                //return true;
             }
             else
             {
@@ -104,10 +125,14 @@ public class Game {
                     toAdvice = patience;
                 }
             }
-            
         }
     }
 
+    private void GameStateAnalysis()
+    {
+        
+    }
+    
     private int Distance(int x1, int y1, int x2, int y2) {
         int sq = (int) (Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         int sqrt = (int) Math.sqrt(sq);

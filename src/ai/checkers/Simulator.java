@@ -328,15 +328,18 @@ public class Simulator
         }
         else if(turn == Piece.Colour.White)
         {
+            int max = Integer.MIN_VALUE;
             for(Move m: moves)
             {
                 //////////////////////////////////////////////////////////////////////////////////
                 String ms = m.ToString();
-                /////////////////////////////////////////////////////////////////////////////////
-                int newAlpha = AlphaBeta(depth - 1, m, turn.Negate(), gs.GetNewGameState(m), alpha, beta);
-                if(newAlpha >= alpha)
-                {
-                    alpha = newAlpha;
+                int i = 0;
+                if(m.steps.getFirst().x == 7)
+                    i = 0;
+                //////////////////////////////////////////////////////////////////////////////
+                int newMax = AlphaBeta(depth - 1, m, turn.Negate(), gs.GetNewGameState(m), alpha, beta);
+                if (newMax >= max) {
+                    max = newMax;
                     minMaxMove = m;
                 }
             }

@@ -69,6 +69,7 @@
             </Property>
           </Properties>
           <Events>
+            <EventHandler event="mouseWheelMoved" listener="java.awt.event.MouseWheelListener" parameters="java.awt.event.MouseWheelEvent" handler="boardPanelMouseWheelMoved"/>
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="boardPanelMousePressed"/>
           </Events>
           <AuxValues>

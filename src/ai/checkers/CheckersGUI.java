@@ -1,11 +1,13 @@
 package ai.checkers;
 
+import java.awt.AWTEvent;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -21,10 +23,20 @@ import javax.swing.*;
  */
 public class CheckersGUI extends javax.swing.JFrame {
     Game game;
+    int dd = 0;
+    int tt = 0;
+    Timer paintTimer;
+    Timer enemyTimer;
     /** Creates new form CheckersGUI */
     public CheckersGUI() {
         initComponents();
         this.setResizable(false);
+        paintTimer = new Timer(50, (e) -> {
+            this.repaint();
+        });
+        paintTimer.start();
+        enemyTimer = new Timer(500, (e) -> boardPanelMouseWheelMoved(null));
+        enemyTimer.setRepeats(false);
         game = new Game(this);
         //boolean t = Tester.NullMove_Test();
 //        Tester.WhiteMoves_Test();
@@ -55,6 +67,11 @@ public class CheckersGUI extends javax.swing.JFrame {
         boardPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
         boardPanel.setMaximumSize(new java.awt.Dimension(800, 800));
         boardPanel.setMinimumSize(new java.awt.Dimension(800, 800));
+        boardPanel.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                boardPanelMouseWheelMoved(evt);
+            }
+        });
         boardPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 boardPanelMousePressed(evt);
@@ -109,25 +126,15 @@ public class CheckersGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void boardPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardPanelMousePressed
-//        int x = evt.getX();
-//        int y = evt.getY();
-//        if(game.turn == Piece.Colour.Black)
-//        {
-//
-//        }
-//        else
-//        {
-//            if(game.PerformValidMove(x, y))
-//            {
-//                game.gs.ApplyMove(Simulator.GetOptimalMove(3, Piece.Colour.Black, game.gs));
-//            }
-//            else
-//            {
-//                game.HighlightMoves(x, y);
-//            }
-//        }
         game.UserInteraction(evt);
+        enemyTimer.start();
+        //game.AI_Move();
     }//GEN-LAST:event_boardPanelMousePressed
+
+    private void boardPanelMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_boardPanelMouseWheelMoved
+        //game.gs.board[dd++][4] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
+        game.AI_Move();
+    }//GEN-LAST:event_boardPanelMouseWheelMoved
 
     /**
      * @param args the command line arguments
