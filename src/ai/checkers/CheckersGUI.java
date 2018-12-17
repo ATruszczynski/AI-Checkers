@@ -189,6 +189,7 @@ public class CheckersGUI extends javax.swing.JFrame {
         float lineThiccness = 2;
         int linePointRadius = 10;
         final static int pieceDiameter = 80;
+        final static int moveAvailableDiam = 90;
         
         public BoardPanel()
         {
@@ -201,6 +202,7 @@ public class CheckersGUI extends javax.swing.JFrame {
             setSize(new Dimension(800,800));
             DrawBoard(g);
             DrawMoveFields(game.validMoves, g);
+            DrawMoveAvailablePieces(game.adviceMoves,g);
             DrawPieces(g);
             DrawMoveLines(game.validMoves, g);
         }
@@ -322,6 +324,20 @@ public class CheckersGUI extends javax.swing.JFrame {
                     DrawLine(p1.x, p1.y, p2.x, p2.y, line, g);
                     DrawDot(p2.x, p2.y, line, g);
                 }
+            }
+        }
+        private void DrawMoveAvailablePieces(LinkedList<Move> avMoves, Graphics g)
+        {
+            int w = getWidth();
+            int h = getHeight();
+            int fieldW = w/8;
+            int fieldH = h/8;
+            g.setColor(chosen);
+            for(Move m: avMoves)
+            {
+                int x = m.steps.getFirst().x * fieldW + (fieldW-moveAvailableDiam)/2;
+                int y = m.steps.getFirst().y * fieldH + (fieldH-moveAvailableDiam)/2;
+                g.fillOval(x, y, moveAvailableDiam, moveAvailableDiam);
             }
         }
     }

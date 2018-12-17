@@ -18,7 +18,8 @@ public class Game {
     boolean inProgress = false;
     CheckersGUI window;
     LinkedList<Move> validMoves = new LinkedList<>();
-    final int patience = 3;
+    LinkedList<Move> adviceMoves = new LinkedList<>();
+    final int patience = 2;
     int toAdvice = patience;
 
     public Game(CheckersGUI w) {
@@ -43,7 +44,10 @@ public class Game {
 
             if (Distance(x, y, xp, yp) < CheckersGUI.BoardPanel.pieceDiameter / 2) {
                 validMoves = gs.GetPieceMoves(Piece.Colour.White, p);
-                return true;
+                if(!validMoves.isEmpty())
+                    return true;
+                else
+                    return false;
             }
         }
         window.repaint();
@@ -80,20 +84,27 @@ public class Game {
         int y = evt.getY();
         if(turn == player)
         {
-            if(validMoves.isEmpty())
+            if(PerformValidMove(x,y))
             {
-                if(!HighlightMoves(x, y))
-                    toAdvice--;
-                if(toAdvice == 0)
-                {
-                    validMoves = gs.GetColourMoves(turn);
-                    toAdvice = patience;
-                }
+                toAdvice = patience;
+                adviceMoves = new LinkedList<>();
             }
             else
             {
-                PerformValidMove(x,y);
+                if (!HighlightMoves(x, y))
+                    toAdvice--;
+                else
+                {
+                    toAdvice = patience;
+                    adviceMoves = new LinkedList<>();
+                }
+                if (toAdvice == 0) 
+                {
+                    adviceMoves = gs.GetColourMoves(turn);
+                    toAdvice = patience;
+                }
             }
+            
         }
     }
 
