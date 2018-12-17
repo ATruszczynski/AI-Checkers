@@ -14,7 +14,7 @@ import javax.swing.Timer;
  */
 public class Game {
     GameState gs;
-    Piece.Colour player = Piece.Colour.White;
+    Piece.Colour player = Piece.Colour.Black;
     Piece.Colour turn = Piece.Colour.White;
     boolean inProgress = false;
     CheckersGUI window;
@@ -45,7 +45,7 @@ public class Game {
             int y = p.y * fieldH + fieldH / 2;
 
             if (Distance(x, y, xp, yp) < CheckersGUI.BoardPanel.pieceDiameter / 2) {
-                validMoves = gs.GetPieceMoves(Piece.Colour.White, p);
+                validMoves = gs.GetPieceMoves(turn, p);
                 if(!validMoves.isEmpty())
                     return true;
                 else
