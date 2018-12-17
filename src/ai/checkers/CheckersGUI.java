@@ -23,6 +23,7 @@ import javax.swing.*;
  */
 public class CheckersGUI extends javax.swing.JFrame {
     Game game;
+    public static volatile boolean term;
     int dd = 0;
     int tt = 0;
     Timer paintTimer;
@@ -38,6 +39,7 @@ public class CheckersGUI extends javax.swing.JFrame {
         enemyTimer = new Timer(500, (e) -> boardPanelMouseWheelMoved(null));
         enemyTimer.setRepeats(false);
         game = new Game(this);
+        
         //boolean t = Tester.NullMove_Test();
 //        Tester.WhiteMoves_Test();
 //        int i = 0;
@@ -126,14 +128,11 @@ public class CheckersGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void boardPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardPanelMousePressed
-        game.UserInteraction(evt);
-        enemyTimer.start();
-        //game.AI_Move();
+        
     }//GEN-LAST:event_boardPanelMousePressed
 
     private void boardPanelMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_boardPanelMouseWheelMoved
-        //game.gs.board[dd++][4] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
-        game.AI_Move();
+        
     }//GEN-LAST:event_boardPanelMouseWheelMoved
 
     /**
@@ -333,17 +332,17 @@ public class CheckersGUI extends javax.swing.JFrame {
                 }
             }
         }
-        private void DrawMoveAvailablePieces(LinkedList<Move> avMoves, Graphics g)
+        private void DrawMoveAvailablePieces(LinkedList<PiecePosition> piecesWithMove, Graphics g)
         {
             int w = getWidth();
             int h = getHeight();
             int fieldW = w/8;
             int fieldH = h/8;
             g.setColor(chosen);
-            for(Move m: avMoves)
+            for(PiecePosition p: piecesWithMove)
             {
-                int x = m.steps.getFirst().x * fieldW + (fieldW-moveAvailableDiam)/2;
-                int y = m.steps.getFirst().y * fieldH + (fieldH-moveAvailableDiam)/2;
+                int x = p.x * fieldW + (fieldW-moveAvailableDiam)/2;
+                int y = p.y * fieldH + (fieldH-moveAvailableDiam)/2;
                 g.fillOval(x, y, moveAvailableDiam, moveAvailableDiam);
             }
         }
