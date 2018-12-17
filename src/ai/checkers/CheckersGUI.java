@@ -22,27 +22,17 @@ import javax.swing.*;
  * @author Aleksander Truszczyński
  */
 public class CheckersGUI extends javax.swing.JFrame {
+    static int controlOffset = 15;
+    static Dimension buttonDim = new Dimension(80,20);
     Game game;
-    public static volatile boolean term;
-    int dd = 0;
-    int tt = 0;
-    Timer paintTimer;
-    Timer enemyTimer;
+    
+    
     /** Creates new form CheckersGUI */
     public CheckersGUI() {
         initComponents();
-        this.setResizable(false);
-        paintTimer = new Timer(50, (e) -> {
-            this.repaint();
-        });
-        paintTimer.start();
-        enemyTimer = new Timer(500, (e) -> boardPanelMouseWheelMoved(null));
-        enemyTimer.setRepeats(false);
+        getThisFukenWindowToLookAsIWant();
         game = new Game(this);
         
-        //boolean t = Tester.NullMove_Test();
-//        Tester.WhiteMoves_Test();
-//        int i = 0;
     }
 
     /** This method is called from within the constructor to
@@ -54,86 +44,115 @@ public class CheckersGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        basePanel = new javax.swing.JSplitPane();
         boardPanel = new BoardPanel();
         menuPanel = new javax.swing.JPanel();
+        startButton = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
+        difficultySlider = new javax.swing.JSlider();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        basePanel.setDividerLocation(850);
-        basePanel.setToolTipText("");
-        basePanel.setEnabled(false);
-        basePanel.setMinimumSize(new java.awt.Dimension(1200, 800));
-        basePanel.setPreferredSize(new java.awt.Dimension(1200, 800));
-
-        boardPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
-        boardPanel.setMaximumSize(new java.awt.Dimension(800, 800));
-        boardPanel.setMinimumSize(new java.awt.Dimension(800, 800));
-        boardPanel.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
-            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
-                boardPanelMouseWheelMoved(evt);
-            }
-        });
-        boardPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        setMinimumSize(new java.awt.Dimension(1200, 800));
+        setPreferredSize(new java.awt.Dimension(1200, 800));
+        addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                boardPanelMousePressed(evt);
+                formMousePressed(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        boardPanel.setBackground(new java.awt.Color(255, 255, 153));
+        boardPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        boardPanel.setMinimumSize(new java.awt.Dimension(800, 800));
+        boardPanel.setPreferredSize(new java.awt.Dimension(800, 800));
 
         javax.swing.GroupLayout boardPanelLayout = new javax.swing.GroupLayout(boardPanel);
         boardPanel.setLayout(boardPanelLayout);
         boardPanelLayout.setHorizontalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 843, Short.MAX_VALUE)
+            .addGap(0, 796, Short.MAX_VALUE)
         );
         boardPanelLayout.setVerticalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 794, Short.MAX_VALUE)
+            .addGap(0, 796, Short.MAX_VALUE)
         );
 
-        basePanel.setLeftComponent(boardPanel);
+        getContentPane().add(boardPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        menuPanel.setMinimumSize(new java.awt.Dimension(350, 800));
-        menuPanel.setPreferredSize(new java.awt.Dimension(350, 800));
+        menuPanel.setBackground(new java.awt.Color(0, 255, 255));
+
+        startButton.setText("Start");
+        startButton.setMaximumSize(new java.awt.Dimension(60, 25));
+        startButton.setMinimumSize(new java.awt.Dimension(60, 25));
+        startButton.setPreferredSize(new java.awt.Dimension(60, 25));
+
+        resetButton.setText("Reset");
+        resetButton.setMaximumSize(new java.awt.Dimension(60, 25));
+        resetButton.setMinimumSize(new java.awt.Dimension(60, 25));
+
+        difficultySlider.setMajorTickSpacing(1);
+        difficultySlider.setPaintTicks(true);
+        difficultySlider.setMaximum(7);
+        difficultySlider.setMinimum(1);
+        difficultySlider.setPaintLabels(true);
+        difficultySlider.setPaintTicks(true);
+        difficultySlider.setValue(1);
 
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 350, Short.MAX_VALUE)
+            .addGroup(menuPanelLayout.createSequentialGroup()
+                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menuPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuPanelLayout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addComponent(difficultySlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         menuPanelLayout.setVerticalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(menuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addComponent(difficultySlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(655, Short.MAX_VALUE))
         );
 
-        basePanel.setRightComponent(menuPanel);
+        getContentPane().add(menuPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 0, 400, 800));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(basePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 787, Short.MAX_VALUE)
-        );
-
-        setSize(new java.awt.Dimension(1219, 834));
+        setSize(new java.awt.Dimension(1219, 842));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void boardPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardPanelMousePressed
+    public void getThisFukenWindowToLookAsIWant()
+    {
+        this.setResizable(false);
+        this.setSize(new Dimension(1200, 830));
+        Dimension d = new Dimension(800,800);
+        boardPanel.setSize(d);
         
-    }//GEN-LAST:event_boardPanelMousePressed
-
-    private void boardPanelMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_boardPanelMouseWheelMoved
+//        difficultySlider.setPaintTicks(rootPaneCheckingEnabled);
+//        difficultySlider.setMajorTickSpacing(1);
         
-    }//GEN-LAST:event_boardPanelMouseWheelMoved
+//        startButton.setLocation(new Point(30,80000));
+//        startButton.setSize(buttonDim);
+        
+        int i = 0;
+        repaint();
+    }
+    
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        int x = evt.getX();
+        int y = evt.getY();
+        int i = 0;
+    }//GEN-LAST:event_formMousePressed
 
     /**
      * @param args the command line arguments
@@ -171,19 +190,21 @@ public class CheckersGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSplitPane basePanel;
     private javax.swing.JPanel boardPanel;
+    private javax.swing.JSlider difficultySlider;
     private javax.swing.JPanel menuPanel;
+    private javax.swing.JButton resetButton;
+    private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 
     public int GetBoardPanelWidth()
     {
-        return boardPanel.getWidth();
+        return this.getWidth();
     }
     
     public int GetBoardPanelHeight()
     {
-        return boardPanel.getHeight();
+        return this.getHeight();
     }
     
     class BoardPanel extends JPanel
@@ -205,7 +226,7 @@ public class CheckersGUI extends javax.swing.JFrame {
         @Override
         public void paintComponent(Graphics g)
         {
-            setSize(new Dimension(800,800));
+            //setSize(new Dimension(800,800));
             DrawBoard(g);
             DrawMoveFields(game.validMoves, g);
             DrawMoveAvailablePieces(game.adviceMoves,g);

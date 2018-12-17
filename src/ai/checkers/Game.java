@@ -14,10 +14,12 @@ public class Game
     public boolean inProgress = true;
     GameState gs;
     CheckersGUI window;
-    LinkedList<Move> validMoves;
-    LinkedList<PiecePosition> adviceMoves;
+    LinkedList<Move> validMoves = new LinkedList<>();
+    LinkedList<PiecePosition> adviceMoves = new LinkedList<>();
     final int movePatienceDef = 2;
     int movePatienceCurr = movePatienceDef;
+    final int stalematePatienceDef = 3;
+    int stalematePatienceCurr = stalematePatienceDef;
     final long minimalDelay = 500000000;
     Piece.Colour turn = Piece.Colour.White;
     Piece.Colour player = Piece.Colour.White;
@@ -26,6 +28,8 @@ public class Game
     public Game (CheckersGUI w)
     {
         window = w;
+        gs = new GameState();
+        gs.Initiate();
     }
     
     public void StartGame()
@@ -68,5 +72,9 @@ public class Game
     private boolean PerformValidMove(java.awt.event.MouseEvent evt)
     {
         return false;
+    }
+    private GameResult AnalyseGameState()
+    {
+        return GameResult.InProgress;
     }
 }
