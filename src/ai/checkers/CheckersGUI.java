@@ -56,8 +56,8 @@ public class CheckersGUI extends javax.swing.JFrame {
         boardPanel.setMaximumSize(new java.awt.Dimension(800, 800));
         boardPanel.setMinimumSize(new java.awt.Dimension(800, 800));
         boardPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                boardPanelMouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                boardPanelMousePressed(evt);
             }
         });
 
@@ -108,25 +108,26 @@ public class CheckersGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void boardPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardPanelMouseClicked
-        int x = evt.getX();
-        int y = evt.getY();
-        if(game.turn == Piece.Colour.Black)
-        {
-            
-        }
-        else
-        {
-            if(game.PefromValidMove(x, y))
-            {
-                game.gs.ApplyMove(Simulator.GetOptimalMove(3, Piece.Colour.Black, game.gs));
-            }
-            else
-            {
-                game.HighlightMoves(x, y);
-            }
-        }
-    }//GEN-LAST:event_boardPanelMouseClicked
+    private void boardPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardPanelMousePressed
+//        int x = evt.getX();
+//        int y = evt.getY();
+//        if(game.turn == Piece.Colour.Black)
+//        {
+//
+//        }
+//        else
+//        {
+//            if(game.PerformValidMove(x, y))
+//            {
+//                game.gs.ApplyMove(Simulator.GetOptimalMove(3, Piece.Colour.Black, game.gs));
+//            }
+//            else
+//            {
+//                game.HighlightMoves(x, y);
+//            }
+//        }
+        game.UserInteraction(evt);
+    }//GEN-LAST:event_boardPanelMousePressed
 
     /**
      * @param args the command line arguments

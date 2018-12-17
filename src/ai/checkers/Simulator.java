@@ -318,6 +318,7 @@ public class Simulator
                 int i = 0;
                 if(m.steps.getFirst().x == 7)
                     i = 0;
+                //////////////////////////////////////////////////////////////////////////////
                 int newMin = AlphaBeta(depth - 1, m, turn.Negate(), gs.GetNewGameState(m), alpha, beta);
                 if (newMin <= min) {
                     min = newMin;

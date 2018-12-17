@@ -3,6 +3,7 @@ package ai.checkers;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.concurrent.Task;
 
 /**
  *
@@ -17,6 +18,8 @@ public class Game {
     boolean inProgress = false;
     CheckersGUI window;
     LinkedList<Move> validMoves = new LinkedList<>();
+    final int patience = 3;
+    int toAdvice = patience;
 
     public Game(CheckersGUI w) {
         gs = new GameState();
@@ -24,9 +27,9 @@ public class Game {
         window = w;
     }
 
-    public void HighlightMoves(int xp, int yp) {
+    public boolean HighlightMoves(int xp, int yp) {
         if (turn != player)
-            return;
+            return false;
         int w = window.GetBoardPanelWidth();
         int h = window.GetBoardPanelHeight();
         int fieldW = w / 8;
@@ -40,13 +43,14 @@ public class Game {
 
             if (Distance(x, y, xp, yp) < CheckersGUI.BoardPanel.pieceDiameter / 2) {
                 validMoves = gs.GetPieceMoves(Piece.Colour.White, p);
-                break;
+                return true;
             }
         }
         window.repaint();
+        return false;
     }
 
-    public boolean PefromValidMove(int xp, int yp) {
+    public boolean PerformValidMove(int xp, int yp) {
         if (turn != player)
             return false;
         int w = window.GetBoardPanelWidth();
@@ -66,7 +70,31 @@ public class Game {
                 return true;
             }
         }
+        window.repaint();
         return false;
+    }
+    
+    public void UserInteraction(java.awt.event.MouseEvent evt)
+    {
+        int x = evt.getX();
+        int y = evt.getY();
+        if(turn == player)
+        {
+            if(validMoves.isEmpty())
+            {
+                if(!HighlightMoves(x, y))
+                    toAdvice--;
+                if(toAdvice == 0)
+                {
+                    validMoves = gs.GetColourMoves(turn);
+                    toAdvice = patience;
+                }
+            }
+            else
+            {
+                PerformValidMove(x,y);
+            }
+        }
     }
 
     private int Distance(int x1, int y1, int x2, int y2) {
