@@ -171,6 +171,7 @@ public class CheckersGUI extends javax.swing.JFrame {
 
     private void boardPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardPanelMousePressed
         game.GameTick(evt);
+        game.AI_Move();
     }//GEN-LAST:event_boardPanelMousePressed
 
     /**

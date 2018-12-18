@@ -49,13 +49,35 @@ public class Game
     {
         if(turn == player)
         {
-            HighlightValidMoves(evt);
+            if(HighlightValidMoves(evt))
+            {
+                ZeroAdviceMoves();
+            }
+            else
+            {
+                if(PerformValidMove(evt))
+                {
+                    ZeroAdvices();
+                    turn = turn.Negate();
+                }
+                else
+                {
+                    ZeroValidMoves();
+                    if(--advicePatienceCurr <= 0)
+                    {
+                        HighlightPiecesWithValidMoves();
+                    }
+                }
+            }
         }
-        else
+    }
+    public void AI_Move()
+    {
+        if(turn == player.Negate())
         {
-            
+            gs.ApplyMove(Simulator.GetOptimalMove(difficultyLevel, turn, gs));
+            turn = turn.Negate();
         }
-        //window.repaint();
     }
     private boolean HighlightValidMoves(java.awt.event.MouseEvent evt)
     {
