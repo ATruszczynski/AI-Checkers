@@ -49,34 +49,20 @@ public class Game
     {
         if(turn == player)
         {
-            if(validMoves.isEmpty()) //nie wklikłeś w pionek
-            {
-                if(HighlightValidMoves(evt))
-                {
-                    ZeroAdviceMoves();
-                }
-                else
-                {
-                    advicePatienceCurr--;
-                    if(advicePatienceCurr < 0)
-                        HighlightPiecesWithValidMoves();
-                }
-            }
-            else
-            {
-                
-            }
+            HighlightValidMoves(evt);
         }
         else
         {
             
         }
+        //window.repaint();
     }
     private boolean HighlightValidMoves(java.awt.event.MouseEvent evt)
     {
-        Pair<Integer, Integer> tmp = window.getFieldWH();
-        int fieldW = tmp.getKey();
-        int fieldH = tmp.getValue();
+        int w = getWidth();
+        int h = getHeight();
+        int fieldW = w/8;
+        int fieldH = h/8;
         LinkedList<PiecePosition> pieces = gs.GetColourPiecesList(player);
         
         int xm = evt.getX();

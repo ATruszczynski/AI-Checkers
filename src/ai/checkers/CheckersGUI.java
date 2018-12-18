@@ -27,7 +27,7 @@ public class CheckersGUI extends javax.swing.JFrame {
     Game game;
     
     Timer paintTimer;
-    int paintTimerInterval = 33;
+    int paintTimerInterval = 20;
     
     
     /** Creates new form CheckersGUI */
@@ -36,7 +36,8 @@ public class CheckersGUI extends javax.swing.JFrame {
         getThisFukenWindowToLookAsIWant();
         
         game = new Game(this);
-        paintTimer = new Timer(paintTimerInterval, () -> this.repaint());
+        paintTimer = new Timer(paintTimerInterval, (e) -> repaint());
+        paintTimer.start();
     }
 
     /** This method is called from within the constructor to
@@ -379,13 +380,5 @@ public class CheckersGUI extends javax.swing.JFrame {
         }
     }
     
-    public Pair<Integer, Integer> getFieldWH()
-    {
-        int w = getWidth();
-        int h = getHeight();
-        int fieldW = w / 8;
-        int fieldH = h / 8;
-        
-        return new Pair(fieldW, fieldH);
-    }
+    
 }
