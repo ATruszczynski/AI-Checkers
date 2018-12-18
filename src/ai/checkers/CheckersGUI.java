@@ -26,13 +26,17 @@ public class CheckersGUI extends javax.swing.JFrame {
     static Dimension buttonDim = new Dimension(80,20);
     Game game;
     
+    Timer paintTimer;
+    int paintTimerInterval = 33;
+    
     
     /** Creates new form CheckersGUI */
     public CheckersGUI() {
         initComponents();
         getThisFukenWindowToLookAsIWant();
-        game = new Game(this);
         
+        game = new Game(this);
+        paintTimer = new Timer(paintTimerInterval, () -> this.repaint());
     }
 
     /** This method is called from within the constructor to
@@ -156,9 +160,7 @@ public class CheckersGUI extends javax.swing.JFrame {
     }
     
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        int x = evt.getX();
-        int y = evt.getY();
-        int i = 0;
+        game.GameTick(evt);
     }//GEN-LAST:event_formMousePressed
 
     /**

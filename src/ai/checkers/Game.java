@@ -17,8 +17,8 @@ public class Game
     CheckersGUI window;
     LinkedList<Move> validMoves = new LinkedList<>();
     LinkedList<PiecePosition> adviceMoves = new LinkedList<>();
-    final int movePatienceDef = 2;
-    int movePatienceCurr = movePatienceDef;
+    final int advicePatienceDef = 2;
+    int advicePatienceCurr = advicePatienceDef;
     final int stalematePatienceDef = 3;
     int stalematePatienceCurr = stalematePatienceDef;
     final long minimalDelay = 500000000;
@@ -49,7 +49,23 @@ public class Game
     {
         if(turn == player)
         {
-            
+            if(validMoves.isEmpty()) //nie wklikłeś w pionek
+            {
+                if(HighlightValidMoves(evt))
+                {
+                    ZeroAdviceMoves();
+                }
+                else
+                {
+                    advicePatienceCurr--;
+                    if(advicePatienceCurr < 0)
+                        HighlightPiecesWithValidMoves();
+                }
+            }
+            else
+            {
+                
+            }
         }
         else
         {
@@ -95,14 +111,15 @@ public class Game
     {
         validMoves = new LinkedList<>();
     }
-    private void ZeroPiecesWithValidMoves()
+    private void ZeroAdviceMoves()
     {
+        advicePatienceCurr = advicePatienceDef;
         adviceMoves = new LinkedList<>();
     }
     private void ZeroAdvices()
     {
         ZeroValidMoves();
-        ZeroPiecesWithValidMoves();
+        ZeroAdviceMoves();
     }
     private boolean PerformValidMove(java.awt.event.MouseEvent evt)
     {
