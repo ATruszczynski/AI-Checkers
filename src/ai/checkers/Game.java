@@ -59,8 +59,8 @@ public class Game
     }
     private boolean HighlightValidMoves(java.awt.event.MouseEvent evt)
     {
-        int w = getWidth();
-        int h = getHeight();
+        int w = window.GetBoardPanelWidth();
+        int h = window.GetBoardPanelHeight();
         int fieldW = w/8;
         int fieldH = h/8;
         LinkedList<PiecePosition> pieces = gs.GetColourPiecesList(player);
@@ -109,9 +109,10 @@ public class Game
     }
     private boolean PerformValidMove(java.awt.event.MouseEvent evt)
     {
-        Pair<Integer, Integer> tmp = window.getFieldWH();
-        int fieldW = tmp.getKey();
-        int fieldH = tmp.getValue();
+        int w = window.GetBoardPanelWidth();
+        int h = window.GetBoardPanelHeight();
+        int fieldW = w/8;
+        int fieldH = h/8;
         
         int xm = evt.getX();
         int ym = evt.getY();

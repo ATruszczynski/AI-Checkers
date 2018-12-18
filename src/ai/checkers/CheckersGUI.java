@@ -69,6 +69,11 @@ public class CheckersGUI extends javax.swing.JFrame {
         boardPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         boardPanel.setMinimumSize(new java.awt.Dimension(800, 800));
         boardPanel.setPreferredSize(new java.awt.Dimension(800, 800));
+        boardPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                boardPanelMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout boardPanelLayout = new javax.swing.GroupLayout(boardPanel);
         boardPanel.setLayout(boardPanelLayout);
@@ -161,8 +166,12 @@ public class CheckersGUI extends javax.swing.JFrame {
     }
     
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        game.GameTick(evt);
+        
     }//GEN-LAST:event_formMousePressed
+
+    private void boardPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardPanelMousePressed
+        game.GameTick(evt);
+    }//GEN-LAST:event_boardPanelMousePressed
 
     /**
      * @param args the command line arguments
@@ -210,12 +219,12 @@ public class CheckersGUI extends javax.swing.JFrame {
 
     public int GetBoardPanelWidth()
     {
-        return this.getWidth();
+        return this.boardPanel.getWidth();
     }
     
     public int GetBoardPanelHeight()
     {
-        return this.getHeight();
+        return this.boardPanel.getHeight();
     }
     
     class BoardPanel extends JPanel
