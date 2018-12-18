@@ -118,7 +118,7 @@ public class CheckersGUI extends javax.swing.JFrame {
         difficultySlider.setMinimum(1);
         difficultySlider.setPaintLabels(true);
         difficultySlider.setPaintTicks(true);
-        difficultySlider.setValue(1);
+        difficultySlider.setValue(3);
 
         settingsButton.setText("Apply and Reset");
         settingsButton.addActionListener(new java.awt.event.ActionListener() {
