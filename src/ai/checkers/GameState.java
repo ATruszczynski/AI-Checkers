@@ -20,19 +20,19 @@ public class GameState implements ICopyAndStringable
     }
     public void Initiate()
     {
-//        for (int y = 0; y < 3; y++)
-//        {
-//            for (int x = 0; x < size; x++)
-//            {
-//                if(x % 2 != y % 2)
-//                {
-//                    board[x][y] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
-//                    board[size - x - 1][size - y - 1] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
-//                }
-//            }
-//        }
-        board[0][7] = new Piece(Piece.Colour.White, Piece.Type.Dame);
-        board[2][7] = new Piece(Piece.Colour.Black, Piece.Type.Dame);
+        for (int y = 0; y < 3; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                if(x % 2 != y % 2)
+                {
+                    board[x][y] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
+                    board[size - x - 1][size - y - 1] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
+                }
+            }
+        }
+//        board[0][7] = new Piece(Piece.Colour.White, Piece.Type.Dame);
+//        board[2][7] = new Piece(Piece.Colour.Black, Piece.Type.Dame);
         
 //        board[0][7] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
 //        board[0][5] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
