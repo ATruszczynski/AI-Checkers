@@ -56,14 +56,20 @@ public class Game
         int fieldH = tmp.getValue();
         LinkedList<PiecePosition> pieces = gs.GetColourPiecesList(player);
         
+        int xm = evt.getX();
+        int ym = evt.getY();
+        
         for(PiecePosition piece: pieces)
         {
-            int x = piece.x * fieldW;
-            int y = piece.y * fieldH;
-            if(Distance(x,y,evt.getX(),evt.getY()) < CheckersGUI.BoardPanel.moveAvailableDiam/2)
-            {
+            int x = piece.x * fieldW + fieldW / 2;
+            int y = piece.y * fieldH + fieldH / 2;
+
+            if (Distance(x, y, xm, ym) < CheckersGUI.BoardPanel.pieceDiameter / 2) {
                 validMoves = gs.GetPieceMoves(player, piece);
-            }
+                if(!validMoves.isEmpty())
+                    return true;
+                else
+                    return false;
         }
         
         return false;
