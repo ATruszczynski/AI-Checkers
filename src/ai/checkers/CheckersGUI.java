@@ -55,6 +55,7 @@ public class CheckersGUI extends javax.swing.JFrame {
         resetButton = new javax.swing.JButton();
         difficultySlider = new javax.swing.JSlider();
         settingsButton = new javax.swing.JButton();
+        endGameLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1200, 800));
@@ -109,6 +110,8 @@ public class CheckersGUI extends javax.swing.JFrame {
 
         settingsButton.setText("Apply and Reset");
 
+        endGameLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
@@ -125,7 +128,10 @@ public class CheckersGUI extends javax.swing.JFrame {
                         .addComponent(difficultySlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(menuPanelLayout.createSequentialGroup()
                         .addGap(130, 130, 130)
-                        .addComponent(settingsButton)))
+                        .addComponent(settingsButton))
+                    .addGroup(menuPanelLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(endGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         menuPanelLayout.setVerticalGroup(
@@ -139,7 +145,9 @@ public class CheckersGUI extends javax.swing.JFrame {
                 .addComponent(difficultySlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(settingsButton)
-                .addContainerGap(612, Short.MAX_VALUE))
+                .addGap(79, 79, 79)
+                .addComponent(endGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(455, Short.MAX_VALUE))
         );
 
         getContentPane().add(menuPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 0, 400, 800));
@@ -150,6 +158,7 @@ public class CheckersGUI extends javax.swing.JFrame {
 
     public void getThisFukenWindowToLookAsIWant()
     {
+        HideEndGameLabel();
         this.setResizable(false);
         this.setSize(new Dimension(1200, 830));
         Dimension d = new Dimension(800,800);
@@ -170,8 +179,8 @@ public class CheckersGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_formMousePressed
 
     private void boardPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardPanelMousePressed
-        game.GameTick(evt);
-        game.AI_Move();
+        game.Player_Turn(evt);
+        game.AI_Turn();
     }//GEN-LAST:event_boardPanelMousePressed
 
     /**
@@ -212,6 +221,7 @@ public class CheckersGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardPanel;
     private javax.swing.JSlider difficultySlider;
+    private javax.swing.JLabel endGameLabel;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JButton resetButton;
     private javax.swing.JButton settingsButton;
@@ -390,5 +400,13 @@ public class CheckersGUI extends javax.swing.JFrame {
         }
     }
     
-    
+    public void SetEndGameLabelText(String txt)
+    {
+        endGameLabel.setText(txt);
+        endGameLabel.setVisible(true);
+    }
+    public void HideEndGameLabel()
+    {
+        endGameLabel.setVisible(false);
+    }
 }

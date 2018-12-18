@@ -12,14 +12,14 @@ import javafx.util.Pair;
 public class Game 
 {
     public static volatile boolean terminateAsynchronousTasks = false;
-    public boolean inProgress = true;
+    public Boolean inProgress = true;
     GameState gs;
     CheckersGUI window;
     LinkedList<Move> validMoves = new LinkedList<>();
     LinkedList<PiecePosition> adviceMoves = new LinkedList<>();
     final int advicePatienceDef = 2;
     int advicePatienceCurr = advicePatienceDef;
-    final int stalematePatienceDef = 3;
+    final int stalematePatienceDef = 5;
     int stalematePatienceCurr = stalematePatienceDef;
     final long minimalDelay = 500000000;
     Piece.Colour turn = Piece.Colour.White;
@@ -45,9 +45,9 @@ public class Game
     {
         
     }
-    public void GameTick(java.awt.event.MouseEvent evt)
+    public void Player_Turn(java.awt.event.MouseEvent evt)
     {
-        if(turn == player)
+        if(inProgress && turn == player)
         {
             if(HighlightValidMoves(evt))
             {
@@ -69,14 +69,21 @@ public class Game
                     }
                 }
             }
+            AnalyseGameState();
         }
     }
-    public void AI_Move()
+    public void AI_Turn()
     {
-        if(turn == player.Negate())
+        if(inProgress && turn == player.Negate())
         {
-            gs.ApplyMove(Simulator.GetOptimalMove(difficultyLevel, turn, gs));
-            turn = turn.Negate();
+            Move m = Simulator.GetOptimalMove(difficultyLevel, turn, gs);
+            if(m != null)
+            {
+                StalemateCheck(m);
+                gs.ApplyMove(m);
+                turn = turn.Negate();
+            }
+            AnalyseGameState();
         }
     }
     private boolean HighlightValidMoves(java.awt.event.MouseEvent evt)
@@ -144,7 +151,9 @@ public class Game
             int x = p.x * fieldW + fieldW / 2;
             int y = p.y * fieldH + fieldH / 2;
 
-            if (Distance(x, y, xm, ym) < CheckersGUI.BoardPanel.pieceDiameter / 2) {
+            if (Distance(x, y, xm, ym) < CheckersGUI.BoardPanel.pieceDiameter / 2) 
+            {
+                StalemateCheck(m);
                 gs.ApplyMove(m);
                 validMoves = new LinkedList<>();
                 return true;
@@ -152,9 +161,72 @@ public class Game
         }
         return false;
     }
-    private GameResult AnalyseGameState()
+    private void AnalyseGameState()
     {
-        return GameResult.InProgress;
+        synchronized (inProgress)
+        {
+            LinkedList<PiecePosition> whites = gs.GetColourPiecesList(Piece.Colour.White);
+            LinkedList<PiecePosition> blacks = gs.GetColourPiecesList(Piece.Colour.Black);
+
+            if(whites.isEmpty())
+            {
+                BlackVictory();
+                return;
+            }
+            if(blacks.isEmpty())
+            {
+                WhiteVictory();
+                return;
+            }
+            LinkedList<Move> whiteMoves = gs.GetColourMoves(Piece.Colour.White);
+            LinkedList<Move> blackMoves = gs.GetColourMoves(Piece.Colour.Black);
+
+            if (turn == Piece.Colour.White)
+                if (blackMoves.isEmpty()) 
+                {
+                    Draw();
+                    return;
+                }
+            if (turn == Piece.Colour.Black)
+                if (whiteMoves.isEmpty()) 
+                {
+                    Draw();
+                    return;
+                }
+            if(stalematePatienceCurr <= 0)
+            {
+                //do przemyślenia, przypadki brzegowe warcab
+            }
+        }
+    }
+    private void StalemateCheck(Move m)
+    {
+        Move mcurr = (Move)m.DeepCopy();
+        Simulator.EvaluateMove(mcurr, gs);
+        if(mcurr.capturedCount == 0)
+        {
+            stalematePatienceCurr--;
+        }
+        else
+        {
+            stalematePatienceCurr = stalematePatienceDef;
+        }
+    }
+    
+    private void BlackVictory()
+    {
+        inProgress = false;
+        window.SetEndGameLabelText("Blacks Won!");
+    }
+    private void WhiteVictory()
+    {
+        inProgress = false;
+        window.SetEndGameLabelText("Whites Won!");
+    }
+    private void Draw()
+    {
+        inProgress = false;
+        window.SetEndGameLabelText("<html>" + "It's a draw. That's some sort of an achievement in checkers." + "</html>");
     }
     private int Distance(int x1, int y1, int x2, int y2)
     {
