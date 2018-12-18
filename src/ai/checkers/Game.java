@@ -70,6 +70,7 @@ public class Game
                     return true;
                 else
                     return false;
+            }
         }
         
         return false;
@@ -80,11 +81,11 @@ public class Game
     }
     private void ZeroValidMoves()
     {
-        
+        validMoves = new LinkedList<>();
     }
     private void ZeroPiecesWithValidMoves()
     {
-        
+        adviceMoves = new LinkedList<>();
     }
     private void ZeroAdvices()
     {
@@ -93,6 +94,24 @@ public class Game
     }
     private boolean PerformValidMove(java.awt.event.MouseEvent evt)
     {
+        Pair<Integer, Integer> tmp = window.getFieldWH();
+        int fieldW = tmp.getKey();
+        int fieldH = tmp.getValue();
+        
+        int xm = evt.getX();
+        int ym = evt.getY();
+
+        for (Move m : validMoves) {
+            PiecePosition p = m.steps.getLast();
+            int x = p.x * fieldW + fieldW / 2;
+            int y = p.y * fieldH + fieldH / 2;
+
+            if (Distance(x, y, xm, ym) < CheckersGUI.BoardPanel.pieceDiameter / 2) {
+                gs.ApplyMove(m);
+                validMoves = new LinkedList<>();
+                return true;
+            }
+        }
         return false;
     }
     private GameResult AnalyseGameState()
