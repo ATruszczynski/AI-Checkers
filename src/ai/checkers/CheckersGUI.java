@@ -49,10 +49,10 @@ public class CheckersGUI extends javax.swing.JFrame {
         startButton = new javax.swing.JButton();
         resetButton = new javax.swing.JButton();
         difficultySlider = new javax.swing.JSlider();
+        settingsButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1200, 800));
-        setPreferredSize(new java.awt.Dimension(1200, 800));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 formMousePressed(evt);
@@ -97,6 +97,8 @@ public class CheckersGUI extends javax.swing.JFrame {
         difficultySlider.setPaintTicks(true);
         difficultySlider.setValue(1);
 
+        settingsButton.setText("Apply and Reset");
+
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
@@ -110,7 +112,10 @@ public class CheckersGUI extends javax.swing.JFrame {
                         .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(menuPanelLayout.createSequentialGroup()
                         .addGap(91, 91, 91)
-                        .addComponent(difficultySlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(difficultySlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuPanelLayout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addComponent(settingsButton)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         menuPanelLayout.setVerticalGroup(
@@ -122,7 +127,9 @@ public class CheckersGUI extends javax.swing.JFrame {
                     .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55)
                 .addComponent(difficultySlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(655, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(settingsButton)
+                .addContainerGap(612, Short.MAX_VALUE))
         );
 
         getContentPane().add(menuPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 0, 400, 800));
@@ -194,6 +201,7 @@ public class CheckersGUI extends javax.swing.JFrame {
     private javax.swing.JSlider difficultySlider;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JButton resetButton;
+    private javax.swing.JButton settingsButton;
     private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 
@@ -215,8 +223,8 @@ public class CheckersGUI extends javax.swing.JFrame {
         Color line = Color.RED;
         float lineThiccness = 2;
         int linePointRadius = 10;
-        final static int pieceDiameter = 80;
-        final static int moveAvailableDiam = 90;
+        public final static int pieceDiameter = 80;
+        public final static int moveAvailableDiam = 90;
         
         public BoardPanel()
         {
@@ -369,4 +377,13 @@ public class CheckersGUI extends javax.swing.JFrame {
         }
     }
     
+    public Pair<Integer, Integer> getFieldWH()
+    {
+        int w = getWidth();
+        int h = getHeight();
+        int fieldW = w / 8;
+        int fieldH = h / 8;
+        
+        return new Pair(fieldW, fieldH);
+    }
 }

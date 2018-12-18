@@ -1,6 +1,7 @@
 package ai.checkers;
 
 import java.util.LinkedList;
+import javafx.util.Pair;
 
 /**
  * 
@@ -50,6 +51,21 @@ public class Game
     }
     private boolean HighlightValidMoves(java.awt.event.MouseEvent evt)
     {
+        Pair<Integer, Integer> tmp = window.getFieldWH();
+        int fieldW = tmp.getKey();
+        int fieldH = tmp.getValue();
+        LinkedList<PiecePosition> pieces = gs.GetColourPiecesList(player);
+        
+        for(PiecePosition piece: pieces)
+        {
+            int x = piece.x * fieldW;
+            int y = piece.y * fieldH;
+            if(Distance(x,y,evt.getX(),evt.getY()) < CheckersGUI.BoardPanel.moveAvailableDiam/2)
+            {
+                validMoves = gs.GetPieceMoves(player, piece);
+            }
+        }
+        
         return false;
     }
     private void HighlightPiecesWithValidMoves()
@@ -76,5 +92,13 @@ public class Game
     private GameResult AnalyseGameState()
     {
         return GameResult.InProgress;
+    }
+    private int Distance(int x1, int y1, int x2, int y2)
+    {
+        int xx = (int)Math.pow(x2 - x1, 2);
+        int yy = (int)Math.pow(y2 - y1, 2);
+        
+        return (int) Math.sqrt(xx + yy);
+        
     }
 }
