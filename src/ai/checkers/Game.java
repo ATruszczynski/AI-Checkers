@@ -12,7 +12,7 @@ import javafx.util.Pair;
 public class Game 
 {
     public static volatile boolean terminateAsynchronousTasks = false;
-    public Boolean inProgress = true;
+    public Boolean inProgress = false;
     GameState gs;
     CheckersGUI window;
     LinkedList<Move> validMoves = new LinkedList<>();
@@ -30,20 +30,30 @@ public class Game
     {
         window = w;
         gs = new GameState();
-        gs.Initiate();
+        gs.GetBeginningState();
     }
     
     public void StartGame()
     {
-        
+        inProgress = true;
+        if(turn != player)
+        {
+            AI_Turn();
+        }
     }
     public void RestartGame()
     {
-         
+        turn = Piece.Colour.White;
+        gs.GetBeginningState();
+        ZeroAdvices();
+        stalematePatienceCurr = stalematePatienceDef;
+        StartGame();
     }
-    public void ChangeSettings(int diff)
+    public void ChangeSettings(int diff, Piece.Colour c)
     {
-        
+        difficultyLevel = diff;
+        player = c;
+        RestartGame();
     }
     public void Player_Turn(java.awt.event.MouseEvent evt)
     {

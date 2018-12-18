@@ -18,8 +18,9 @@ public class GameState implements ICopyAndStringable
         size = 8;
         board = new Piece[size][size];
     }
-    public void Initiate()
+    public void GetBeginningState()
     {
+        board = new Piece[size][size];
         for (int y = 0; y < 3; y++)
         {
             for (int x = 0; x < size; x++)
