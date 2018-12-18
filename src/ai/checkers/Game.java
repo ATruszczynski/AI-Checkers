@@ -47,7 +47,14 @@ public class Game
     }
     public void GameTick(java.awt.event.MouseEvent evt)
     {
-        
+        if(turn == player)
+        {
+            
+        }
+        else
+        {
+            
+        }
     }
     private boolean HighlightValidMoves(java.awt.event.MouseEvent evt)
     {
@@ -77,7 +84,12 @@ public class Game
     }
     private void HighlightPiecesWithValidMoves()
     {
-        
+        LinkedList<Move> moves = gs.GetColourMoves(player);
+        adviceMoves = new LinkedList<>();
+        for(Move m: moves)
+        {
+            adviceMoves.add(m.steps.getFirst());
+        }
     }
     private void ZeroValidMoves()
     {
