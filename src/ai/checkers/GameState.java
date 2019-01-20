@@ -1,7 +1,11 @@
 package ai.checkers;
 
+import static java.lang.Thread.sleep;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.util.Pair;
+import javax.swing.Timer;
 
 /**
  * 

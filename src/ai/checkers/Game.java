@@ -1,7 +1,11 @@
 package ai.checkers;
 
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.util.Pair;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 /**
  * 
@@ -19,18 +23,21 @@ public class Game
     LinkedList<PiecePosition> adviceMoves = new LinkedList<>();
     final int advicePatienceDef = 2;
     int advicePatienceCurr = advicePatienceDef;
-    final int stalematePatienceDef = 5;
+    final int stalematePatienceDef = 40;
     int stalematePatienceCurr = stalematePatienceDef;
     final long minimalDelay = 500000000;
     Piece.Colour turn = Piece.Colour.White;
     Piece.Colour player = Piece.Colour.White;
     int difficultyLevel = 3;
+    Timer AiTimer;
+    int timerInt = 300;
     
     public Game (CheckersGUI w)
     {
         window = w;
         gs = new GameState();
         gs.GetBeginningState();
+        AiTimer = new Timer(timerInt, (e) -> {AI_Turn(); AiTimer.stop();});
     }
     
     public void StartGame()
@@ -38,13 +45,15 @@ public class Game
         inProgress = true;
         if(turn != player)
         {
-            AI_Turn();
+            FireAITurn();
         }
     }
     public void RestartGame()
     {
         turn = Piece.Colour.White;
         gs.GetBeginningState();
+        window.SetEndGameLabelText("");
+        
         ZeroAdvices();
         stalematePatienceCurr = stalematePatienceDef;
         StartGame();
@@ -55,7 +64,7 @@ public class Game
         player = c;
         RestartGame();
     }
-    public void Player_Turn(java.awt.event.MouseEvent evt)
+    public boolean Player_Turn(java.awt.event.MouseEvent evt)
     {
         if(inProgress && turn == player)
         {
@@ -69,6 +78,7 @@ public class Game
                 {
                     ZeroAdvices();
                     turn = turn.Negate();
+                    return true;
                 }
                 else
                 {
@@ -81,6 +91,7 @@ public class Game
             }
             AnalyseGameState();
         }
+        return false;
     }
     public void AI_Turn()
     {
@@ -95,6 +106,10 @@ public class Game
             }
             AnalyseGameState();
         }
+    }
+    public void FireAITurn()
+    {
+        AiTimer.restart();
     }
     private boolean HighlightValidMoves(java.awt.event.MouseEvent evt)
     {
@@ -192,20 +207,21 @@ public class Game
             LinkedList<Move> blackMoves = gs.GetColourMoves(Piece.Colour.Black);
 
             if (turn == Piece.Colour.White)
-                if (blackMoves.isEmpty()) 
+                if (whiteMoves.isEmpty()) 
                 {
-                    Draw();
+                    BlackVictory();
                     return;
                 }
             if (turn == Piece.Colour.Black)
-                if (whiteMoves.isEmpty()) 
+                if (blackMoves.isEmpty()) 
                 {
-                    Draw();
+                    WhiteVictory();
                     return;
                 }
             if(stalematePatienceCurr <= 0)
             {
                 //do przemyślenia, przypadki brzegowe warcab
+                Draw();
             }
         }
     }

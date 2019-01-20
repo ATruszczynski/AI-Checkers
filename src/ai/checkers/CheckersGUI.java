@@ -220,8 +220,8 @@ public class CheckersGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_formMousePressed
 
     private void boardPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardPanelMousePressed
-        game.Player_Turn(evt);
-        game.AI_Turn();
+        if(game.Player_Turn(evt))
+            game.FireAITurn();
     }//GEN-LAST:event_boardPanelMousePressed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
@@ -312,6 +312,10 @@ public class CheckersGUI extends javax.swing.JFrame {
             return Piece.Colour.White;
         else
             return Piece.Colour.Black;
+    }
+    public JPanel GetPanel()
+    {
+        return boardPanel;
     }
     class BoardPanel extends JPanel
     {

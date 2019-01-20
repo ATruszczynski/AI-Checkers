@@ -1,6 +1,7 @@
 package ai.checkers;
 
 import java.util.LinkedList;
+import java.util.Random;
 import javafx.util.Pair;
 
 /**
@@ -299,7 +300,8 @@ public class Simulator
         if(moves.isEmpty())
             return null;
         
-        Move minMaxMove = null;
+        //Move minMaxMove = null;
+        LinkedList<Move> minMaxMoves = new LinkedList<>();
         int alpha = Integer.MIN_VALUE;
         int beta = Integer.MAX_VALUE;
         
@@ -313,16 +315,16 @@ public class Simulator
             int min = Integer.MAX_VALUE;
             for(Move m: moves)
             {
-                //////////////////////////////////////////////////////////////////////////////////
-                String ms = m.ToString();
-                int i = 0;
-                if(m.steps.getFirst().x == 7)
-                    i = 0;
-                //////////////////////////////////////////////////////////////////////////////
                 int newMin = AlphaBeta(depth - 1, m, turn.Negate(), gs.GetNewGameState(m), alpha, beta);
-                if (newMin <= min) {
+                if (newMin == min) 
+                {
+                    minMaxMoves.add(m);
+                }
+                else if(newMin < min)
+                {
                     min = newMin;
-                    minMaxMove = m;
+                    minMaxMoves = new LinkedList<>();
+                    minMaxMoves.add(m);
                 }
             }
         }
@@ -331,21 +333,21 @@ public class Simulator
             int max = Integer.MIN_VALUE;
             for(Move m: moves)
             {
-                //////////////////////////////////////////////////////////////////////////////////
-                String ms = m.ToString();
-                int i = 0;
-                if(m.steps.getFirst().x == 7)
-                    i = 0;
-                //////////////////////////////////////////////////////////////////////////////
                 int newMax = AlphaBeta(depth - 1, m, turn.Negate(), gs.GetNewGameState(m), alpha, beta);
-                if (newMax >= max) {
+                if (newMax == max) 
+                {
+                    minMaxMoves.add(m);
+                }
+                else if (newMax > max)
+                {
                     max = newMax;
-                    minMaxMove = m;
+                    minMaxMoves = new LinkedList<>();
+                    minMaxMoves.add(m);
                 }
             }
         }
-        
-        return minMaxMove;
+        Random r = new Random();
+        return minMaxMoves.get(r.nextInt(minMaxMoves.size()));
     }
     public static int AlphaBeta(int depth, Move cumuMove, Piece.Colour turn, GameState gs, int alpha, int beta)
     {
