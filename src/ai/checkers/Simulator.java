@@ -300,15 +300,10 @@ public class Simulator
         if(moves.isEmpty())
             return null;
         
-        //Move minMaxMove = null;
         LinkedList<Move> minMaxMoves = new LinkedList<>();
         int alpha = Integer.MIN_VALUE;
         int beta = Integer.MAX_VALUE;
         
-        
-        //////////////////////////////////////////////////////////////////////////////////
-        LinkedList<String> movesss = Tester.MovesToStrings(moves);
-        /////////////////////////////////////////////////////////////////////////////////
         
         if(turn == Piece.Colour.Black)
         {
@@ -369,19 +364,11 @@ public class Simulator
                 return Scoring.BlackVictory;
             }
         }
-                
-        
-        //////////////////////////////////////////////////////////////////////////////////
-        LinkedList<String> movesss = Tester.MovesToStrings(moves);
-        /////////////////////////////////////////////////////////////////////////////////
         
         if(turn == Piece.Colour.Black)
         {
             for(Move m: moves)
             {
-                //////////////////////////////////////////////////////////////////////////////////
-                String ms = m.ToString();
-                /////////////////////////////////////////////////////////////////////////////////
                 int newBeta = AlphaBeta(depth - 1, cumuMove.GetConcatenatedMove(m), turn.Negate(), gs.GetNewGameState(m), alpha, beta);
                 if(newBeta < beta)
                 {
@@ -398,9 +385,6 @@ public class Simulator
         {
             for(Move m: moves)
             {
-                //////////////////////////////////////////////////////////////////////////////////
-                String ms = m.ToString();
-                /////////////////////////////////////////////////////////////////////////////////
                 int newAlpha = AlphaBeta(depth - 1, cumuMove.GetConcatenatedMove(m), turn.Negate(), gs.GetNewGameState(m), alpha, beta);
                 if(newAlpha > alpha)
                 {

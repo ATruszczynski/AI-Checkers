@@ -36,28 +36,6 @@ public class GameState implements ICopyAndStringable
                 }
             }
         }
-//        board[0][7] = new Piece(Piece.Colour.White, Piece.Type.Dame);
-//        board[2][7] = new Piece(Piece.Colour.Black, Piece.Type.Dame);
-        
-//        board[0][7] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
-//        board[0][5] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
-//        board[0][3] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
-//        board[1][6] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
-//        board[2][7] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
-//        board[3][6] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
-//        board[4][7] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
-//        board[5][6] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
-//        board[7][6] = new Piece(Piece.Colour.White, Piece.Type.Pawn);
-//        
-//        board[0][1] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
-//        board[1][0] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
-//        board[1][2] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
-//        board[2][1] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
-//        board[3][0] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
-//        board[4][1] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
-//        board[5][0] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
-//        board[5][4] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
-//        board[7][0] = new Piece(Piece.Colour.Black, Piece.Type.Pawn);
     }
     
     public LinkedList<PiecePosition> GetPiecesList()

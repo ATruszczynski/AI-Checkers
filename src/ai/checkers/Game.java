@@ -243,16 +243,19 @@ public class Game
     {
         inProgress = false;
         window.SetEndGameLabelText("Blacks Won!");
+        ZeroAdvices();
     }
     private void WhiteVictory()
     {
         inProgress = false;
         window.SetEndGameLabelText("Whites Won!");
+        ZeroAdvices();
     }
     private void Draw()
     {
         inProgress = false;
         window.SetEndGameLabelText("<html>" + "It's a draw. That's some sort of an achievement in checkers." + "</html>");
+        ZeroAdvices();
     }
     private int Distance(int x1, int y1, int x2, int y2)
     {

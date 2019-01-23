@@ -33,7 +33,7 @@ public class CheckersGUI extends javax.swing.JFrame {
     /** Creates new form CheckersGUI */
     public CheckersGUI() {
         initComponents();
-        getThisFukenWindowToLookAsIWant();
+        makeWindowFormat();
         
         game = new Game(this);
         paintTimer = new Timer(paintTimerInterval, (e) -> repaint());
@@ -58,12 +58,20 @@ public class CheckersGUI extends javax.swing.JFrame {
         endGameLabel = new javax.swing.JLabel();
         whiteRadioButton = new javax.swing.JRadioButton();
         blackRadioButton = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1200, 800));
+        setMinimumSize(new java.awt.Dimension(1200, 830));
+        setPreferredSize(new java.awt.Dimension(1200, 830));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 formMousePressed(evt);
+            }
+        });
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -144,6 +152,12 @@ public class CheckersGUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Difficulty level:");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Player colour:");
+
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
@@ -151,23 +165,31 @@ public class CheckersGUI extends javax.swing.JFrame {
             .addGroup(menuPanelLayout.createSequentialGroup()
                 .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(209, 209, 209)
+                        .addComponent(endGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(menuPanelLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                        .addContainerGap()
+                        .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(difficultySlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(menuPanelLayout.createSequentialGroup()
+                                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(menuPanelLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(menuPanelLayout.createSequentialGroup()
-                                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(menuPanelLayout.createSequentialGroup()
-                                        .addComponent(whiteRadioButton)
-                                        .addGap(56, 56, 56)
-                                        .addComponent(blackRadioButton))
-                                    .addComponent(settingsButton))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(endGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(difficultySlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(136, 136, 136)
+                                .addComponent(blackRadioButton))
+                            .addComponent(settingsButton)))
+                    .addGroup(menuPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(menuPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(whiteRadioButton)
+                            .addComponent(jLabel2))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menuPanelLayout.setVerticalGroup(
@@ -177,18 +199,21 @@ public class CheckersGUI extends javax.swing.JFrame {
                 .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(148, 148, 148)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(13, 13, 13)
                 .addComponent(difficultySlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(endGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(menuPanelLayout.createSequentialGroup()
-                        .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(whiteRadioButton)
-                            .addComponent(blackRadioButton))
-                        .addGap(28, 28, 28)
-                        .addComponent(settingsButton)))
-                .addContainerGap(455, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(blackRadioButton)
+                    .addComponent(whiteRadioButton))
+                .addGap(25, 25, 25)
+                .addComponent(settingsButton)
+                .addGap(8, 8, 8)
+                .addComponent(endGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(462, Short.MAX_VALUE))
         );
 
         getContentPane().add(menuPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 0, 400, 800));
@@ -197,11 +222,11 @@ public class CheckersGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    public void getThisFukenWindowToLookAsIWant()
+    public void makeWindowFormat()
     {
         HideEndGameLabel();
         this.setResizable(false);
-        this.setSize(new Dimension(1200, 830));
+        this.setSize(new Dimension(1200, 800));
         Dimension d = new Dimension(800,800);
         boardPanel.setSize(d);
         
@@ -224,27 +249,32 @@ public class CheckersGUI extends javax.swing.JFrame {
             game.FireAITurn();
     }//GEN-LAST:event_boardPanelMousePressed
 
-    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        game.StartGame();
-    }//GEN-LAST:event_startButtonActionPerformed
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        // TODO add your handling code here:
+        //boardPanel.setSize(getWidth() - menuPanel.getWidth(),getHeight());
+    }//GEN-LAST:event_formComponentResized
 
-    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        game.RestartGame();
-    }//GEN-LAST:event_resetButtonActionPerformed
+    private void blackRadioButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blackRadioButtonMousePressed
+
+        whiteRadioButton.setSelected(false);
+    }//GEN-LAST:event_blackRadioButtonMousePressed
+
+    private void whiteRadioButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_whiteRadioButtonMousePressed
+        blackRadioButton.setSelected(false);
+    }//GEN-LAST:event_whiteRadioButtonMousePressed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
         game.ChangeSettings(difficultySlider.getValue(), GetSelectedColour());
         game.RestartGame();
     }//GEN-LAST:event_settingsButtonActionPerformed
 
-    private void whiteRadioButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_whiteRadioButtonMousePressed
-        blackRadioButton.setSelected(false);
-    }//GEN-LAST:event_whiteRadioButtonMousePressed
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        game.RestartGame();
+    }//GEN-LAST:event_resetButtonActionPerformed
 
-    private void blackRadioButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blackRadioButtonMousePressed
-        
-        whiteRadioButton.setSelected(false);
-    }//GEN-LAST:event_blackRadioButtonMousePressed
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        game.StartGame();
+    }//GEN-LAST:event_startButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,6 +316,8 @@ public class CheckersGUI extends javax.swing.JFrame {
     private javax.swing.JPanel boardPanel;
     private javax.swing.JSlider difficultySlider;
     private javax.swing.JLabel endGameLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JButton resetButton;
     private javax.swing.JButton settingsButton;
