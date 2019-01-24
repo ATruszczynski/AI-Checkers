@@ -17,7 +17,7 @@ public class Game
 {
     public static volatile boolean terminateAsynchronousTasks = false;
     public Boolean inProgress = false;
-    GameState gs;
+    GameState gameState;
     CheckersGUI window;
     LinkedList<Move> validMoves = new LinkedList<>();
     LinkedList<PiecePosition> adviceMoves = new LinkedList<>();
@@ -35,8 +35,8 @@ public class Game
     public Game (CheckersGUI w)
     {
         window = w;
-        gs = new GameState();
-        gs.GetBeginningState();
+        gameState = new GameState();
+        gameState.GetBeginningState();
         AiTimer = new Timer(timerInt, (e) -> {AI_Turn(); AiTimer.stop();});
     }
     
@@ -51,7 +51,7 @@ public class Game
     public void RestartGame()
     {
         turn = Piece.Colour.White;
-        gs.GetBeginningState();
+        gameState.GetBeginningState();
         window.SetEndGameLabelText("");
         
         ZeroAdvices();
@@ -97,11 +97,11 @@ public class Game
     {
         if(inProgress && turn == player.Negate())
         {
-            Move m = Simulator.GetOptimalMove(difficultyLevel, turn, gs);
+            Move m = Simulator.GetOptimalMove(difficultyLevel, turn, gameState);
             if(m != null)
             {
                 StalemateCheck(m);
-                gs.ApplyMove(m);
+                gameState.ApplyMove(m);
                 turn = turn.Negate();
             }
             AnalyseGameState();
@@ -117,7 +117,7 @@ public class Game
         int h = window.GetBoardPanelHeight();
         int fieldW = w/8;
         int fieldH = h/8;
-        LinkedList<PiecePosition> pieces = gs.GetColourPiecesList(player);
+        LinkedList<PiecePosition> pieces = gameState.GetColourPiecesList(player);
         
         int xm = evt.getX();
         int ym = evt.getY();
@@ -128,7 +128,7 @@ public class Game
             int y = piece.y * fieldH + fieldH / 2;
 
             if (Distance(x, y, xm, ym) < CheckersGUI.BoardPanel.pieceDiameter / 2) {
-                validMoves = gs.GetPieceMoves(player, piece);
+                validMoves = gameState.GetPieceMoves(player, piece);
                 if(!validMoves.isEmpty())
                     return true;
                 else
@@ -140,7 +140,7 @@ public class Game
     }
     private void HighlightPiecesWithValidMoves()
     {
-        LinkedList<Move> moves = gs.GetColourMoves(player);
+        LinkedList<Move> moves = gameState.GetColourMoves(player);
         adviceMoves = new LinkedList<>();
         for(Move m: moves)
         {
@@ -179,7 +179,7 @@ public class Game
             if (Distance(x, y, xm, ym) < CheckersGUI.BoardPanel.pieceDiameter / 2) 
             {
                 StalemateCheck(m);
-                gs.ApplyMove(m);
+                gameState.ApplyMove(m);
                 validMoves = new LinkedList<>();
                 return true;
             }
@@ -190,8 +190,8 @@ public class Game
     {
         synchronized (inProgress)
         {
-            LinkedList<PiecePosition> whites = gs.GetColourPiecesList(Piece.Colour.White);
-            LinkedList<PiecePosition> blacks = gs.GetColourPiecesList(Piece.Colour.Black);
+            LinkedList<PiecePosition> whites = gameState.GetColourPiecesList(Piece.Colour.White);
+            LinkedList<PiecePosition> blacks = gameState.GetColourPiecesList(Piece.Colour.Black);
 
             if(whites.isEmpty())
             {
@@ -203,8 +203,8 @@ public class Game
                 WhiteVictory();
                 return;
             }
-            LinkedList<Move> whiteMoves = gs.GetColourMoves(Piece.Colour.White);
-            LinkedList<Move> blackMoves = gs.GetColourMoves(Piece.Colour.Black);
+            LinkedList<Move> whiteMoves = gameState.GetColourMoves(Piece.Colour.White);
+            LinkedList<Move> blackMoves = gameState.GetColourMoves(Piece.Colour.Black);
 
             if (turn == Piece.Colour.White)
                 if (whiteMoves.isEmpty()) 
@@ -228,7 +228,7 @@ public class Game
     private void StalemateCheck(Move m)
     {
         Move mcurr = (Move)m.DeepCopy();
-        Simulator.EvaluateMove(mcurr, gs);
+        Simulator.EvaluateMove(mcurr, gameState);
         if(mcurr.capturedCount == 0)
         {
             stalematePatienceCurr--;

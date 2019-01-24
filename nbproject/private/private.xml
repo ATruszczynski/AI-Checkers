@@ -4,10 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Aleksander/Documents/NetBeansProjects/AI-Checkers/src/ai/checkers/Simulator.java</file>
+            <file>file:/C:/Users/Aleksander/Documents/NetBeansProjects/AI-Checkers/src/ai/checkers/GameResult.java</file>
+            <file>file:/C:/Users/Aleksander/Documents/NetBeansProjects/AI-Checkers/src/ai/checkers/Move.java</file>
             <file>file:/C:/Users/Aleksander/Documents/NetBeansProjects/AI-Checkers/src/ai/checkers/Tester.java</file>
             <file>file:/C:/Users/Aleksander/Documents/NetBeansProjects/AI-Checkers/src/ai/checkers/CheckersGUI.java</file>
             <file>file:/C:/Users/Aleksander/Documents/NetBeansProjects/AI-Checkers/src/ai/checkers/Game.java</file>
+            <file>file:/C:/Users/Aleksander/Documents/NetBeansProjects/AI-Checkers/src/ai/checkers/Scoring.java</file>
             <file>file:/C:/Users/Aleksander/Documents/NetBeansProjects/AI-Checkers/src/ai/checkers/GameState.java</file>
+            <file>file:/C:/Users/Aleksander/Documents/NetBeansProjects/AI-Checkers/src/ai/checkers/ICopyAndStringable.java</file>
+            <file>file:/C:/Users/Aleksander/Documents/NetBeansProjects/AI-Checkers/src/ai/checkers/Piece.java</file>
+            <file>file:/C:/Users/Aleksander/Documents/NetBeansProjects/AI-Checkers/src/ai/checkers/PiecePosition.java</file>
         </group>
     </open-files>
 </project-private>
